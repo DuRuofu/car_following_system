@@ -12,6 +12,8 @@ void ENCODER_INIT(void)
 {
 	HAL_TIM_Encoder_Start(&htim2,TIM_CHANNEL_ALL);
 	HAL_TIM_Encoder_Start(&htim3,TIM_CHANNEL_ALL);
+    __HAL_TIM_SET_COUNTER(&htim2, 0);
+    __HAL_TIM_SET_COUNTER(&htim3, 0);
 }
 
 
@@ -74,10 +76,7 @@ void encoder_speed(void)//car_speed_1
 
     // 打印速度值
     //printf("car_speed_1:%d\r\n",car_speed_1);
-    DEBUG_info("car_speed_1=%d",car_speed_1);
-    HAL_Delay(2);
-    DEBUG_info("car_speed_2=%d",car_speed_2);
-    HAL_Delay(2);
+
 }
 
 

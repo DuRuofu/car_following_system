@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-04-13 13-51-51
  * @FilePath: \CarFollowingSystem-00\Users\Components\key\key.c
  * @Description: 键盘扫描
- * Copyright (c) 2023 by duruofu@foxmail.com All Rights Reserved. 
+ * Copyright (c) 2023 by duruofu@foxmail.com All Rights Reserved.
  */
 
 #include "key.h"
@@ -18,15 +18,16 @@
 #define KEY3_Pin KEY_3_Pin
 #define KEY4_Pin KEY_4_Pin
 
-
 #define DEBOUNCE_DELAY 250 // 设置消抖延时为200毫秒
 
-//题目标志位
+// 题目标志位
 extern uint8_t Problem_Flag;
 
-//急停标志位
+// 急停标志位
 uint8_t Stop_Flag;
 
+// 目标速度
+extern int32_t Target_Speed;
 
 /**
  * @description: 按键初始化 (使用CubeMX自动生成的宏定义，就不用写这个函数了)
@@ -34,73 +35,58 @@ uint8_t Stop_Flag;
  */
 void Key_Init(void)
 {
-        
 }
 
 // 按键1 题目切换按钮
 void Key_1_Callback(void)
 {
-   //Led_Toggle();
-   //更换题目
-   if(Problem_Flag < 5)
-   {
-       Problem_Flag++;
-   }
-   else 
-   {
-       Problem_Flag = 0;
-   }
-    
+    // Led_Toggle();
+    // 更换题目
+    if (Problem_Flag < 5)
+    {
+        Problem_Flag++;
+    }
+    else
+    {
+        Problem_Flag = 0;
+    }
+
+    Target_Speed = 0;
     Buzzer_ShortBeep();
-	
 }
-
-
 
 // 按键2  急停按键
 void Key_2_Callback(void)
 {
-    if(Stop_Flag == 1)
-    {
-        Stop_Flag=0;
-    }
-    else{
-        Stop_Flag=1;
-    }
+    Target_Speed = 30;
+    Buzzer_ShortBeep();
 }
 
 // 按键3  复位按键
-void Key_3_Callback(void){
-
+void Key_3_Callback(void)
+{
+    Target_Speed = -30;
+    Buzzer_ShortBeep();
 }
 
-
-void Key_4_Callback(void){
-    //更换题目
-    if(Problem_Flag == 2)
-    {
-        Problem_Flag =0;
-    }
-    else 
-    {
-        Problem_Flag = 2;
-    }
+void Key_4_Callback(void)
+{
+    Target_Speed = 70;
+    Buzzer_ShortBeep();
 }
 
-void Key_5_Callback(void){
-    //更换题目
-    if(Problem_Flag == 3)
+void Key_5_Callback(void)
+{
+    // 更换题目
+    if (Problem_Flag == 3)
     {
-        Problem_Flag =0;
+        Problem_Flag = 0;
     }
-    else 
+    else
     {
         Problem_Flag = 3;
     }
 }
-
-
-
 
 /**
  * @description: 按键检测，外部中断回调函数
@@ -116,29 +102,28 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
             the HAL_GPIO_EXTI_Callback could be implemented in the user file
     */
     // 按键按下
-    if(GPIO_Pin == KEY1_Pin)
+    if (GPIO_Pin == KEY1_Pin)
     {
-        //printf("按键1");
-        Debounce(GPIO_Pin, Key_1_Callback); 
-    }
-    else if(GPIO_Pin == KEY2_Pin)
-    {
-        // 按键2按下的处理代码
+        // printf("按键1");
         Debounce(GPIO_Pin, Key_1_Callback);
     }
-	else if(GPIO_Pin == KEY3_Pin)
+    else if (GPIO_Pin == KEY2_Pin)
+    {
+        // 按键2按下的处理代码
+        Debounce(GPIO_Pin, Key_2_Callback);
+    }
+    else if (GPIO_Pin == KEY3_Pin)
     {
 
         // 按键3按下的处理代码
-        Debounce(GPIO_Pin, Key_1_Callback);
+        Debounce(GPIO_Pin, Key_3_Callback);
     }
-     else if(GPIO_Pin == KEY4_Pin)
+    else if (GPIO_Pin == KEY4_Pin)
     {
         // 按键4按下的处理代码
-        Debounce(GPIO_Pin, Key_1_Callback);
+        Debounce(GPIO_Pin, Key_4_Callback);
     }
 }
-
 
 // 通用的按键消抖函数
 void Debounce(uint16_t GPIO_Pin, void (*callback)(void))
@@ -148,11 +133,8 @@ void Debounce(uint16_t GPIO_Pin, void (*callback)(void))
 
     if (currentTime - lastTriggerTime >= DEBOUNCE_DELAY)
     {
-        //Buzzer_ShortBeep();
-        callback(); // 调用传入的回调函数
+        // Buzzer_ShortBeep();
+        callback();                    // 调用传入的回调函数
         lastTriggerTime = currentTime; // 更新上一次触发的时间戳
     }
 }
-
-
-

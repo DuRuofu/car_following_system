@@ -15,13 +15,13 @@ extern uint8_t Problem_Flag = 0;
 //消息接收标志位
 extern uint8_t K210_Flag =1;
 
-uint32_t distance_to_end = 180; 
+uint32_t distance_to_end = 180;
 
-
+extern int32_t Target_Speed;
 //--------------------------K210参考系---------------------
 
-// [K210]实时位置 
-int x ;
+// [K210]实时位置
+int x;
 int y ;
 int distance;
 //实时速度
@@ -31,8 +31,6 @@ extern int32_t car_speed_2 ; // 电机2速度
 extern int leftMotorPWM;//PA8
 extern int rightMotorPWM;//PA9
 
-extern Pid pidmotor1speed;
-extern Pid pidmotor2speed;
 
 uint8_t count=0;
 
@@ -65,7 +63,7 @@ void App_Init(void)
 	OLED_ShowString(4,0,"Car parameter",16);
 	DEBUG_printf("APP","系统初始化完成~");
 
-//  motorset(200, 200);
+  //motorset(1000, 1000);
 //  HAL_Delay(2000);
 //  motorset(-200, -200);
     Buzzer_ShortBeep();
@@ -111,6 +109,8 @@ void App_Task(void)
 	// 测试串口2发送
 	// Usart2DmaPrintf("[UART2] sys task runing--\r\n");
 
+	DEBUG_info("car_speed_2=%d\r\ncar_speed_1=%d\r\nTarget_Speed=%d", car_speed_2, car_speed_1, Target_Speed);
+	HAL_Delay(5);
 }
 
 // 题目1
@@ -168,7 +168,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) // 1ms一次
 	count++;
 
 	// 5ms执行一次操作
-	if (count % 5 == 0)
+	if (count % 10 == 0)
 	{
 		// 读取编码器速度
 		encoder_speed();
