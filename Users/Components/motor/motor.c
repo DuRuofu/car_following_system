@@ -1,4 +1,5 @@
 #include "motor.h"
+#include <stdlib.h>
 
 int leftMotorPWM;
 int rightMotorPWM;
@@ -94,7 +95,7 @@ void motorset(int leftMotorPWM, int rightMotorPWM) // 速度
 	else if (leftMotorPWM <= 0 && rightMotorPWM >= 0)
 	{
 		LeftMotor_Back();
-		leftMotorPWM = -leftMotorPWM;
+		leftMotorPWM = abs(leftMotorPWM);
 		RightMotor_Go();
 		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, leftMotorPWM);
 		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, rightMotorPWM);
@@ -103,7 +104,7 @@ void motorset(int leftMotorPWM, int rightMotorPWM) // 速度
 	else if (leftMotorPWM >= 0 && rightMotorPWM <= 0)
 	{
 		LeftMotor_Go();
-		rightMotorPWM = -rightMotorPWM;
+		rightMotorPWM = abs(rightMotorPWM);
 		RightMotor_Back();
 		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, leftMotorPWM);
 		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, rightMotorPWM);
@@ -113,8 +114,8 @@ void motorset(int leftMotorPWM, int rightMotorPWM) // 速度
 	{
 		LeftMotor_Back();
 		RightMotor_Back();
-		leftMotorPWM = -leftMotorPWM;
-		rightMotorPWM = -rightMotorPWM;
+		leftMotorPWM = abs(leftMotorPWM);
+		rightMotorPWM = abs(rightMotorPWM);
 		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, leftMotorPWM);
 		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, rightMotorPWM);
 	}

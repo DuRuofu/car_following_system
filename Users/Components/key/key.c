@@ -2,7 +2,7 @@
  * @Author: DuRuofu duruofu@qq.com
  * @Date: 2023-08-02 12-02-17
  * @LastEditors: DuRuofu
- * @LastEditTime: 2024-04-12 21-03-20
+ * @LastEditTime: 2024-04-13 13-51-51
  * @FilePath: \CarFollowingSystem-00\Users\Components\key\key.c
  * @Description: 键盘扫描
  * Copyright (c) 2023 by duruofu@foxmail.com All Rights Reserved. 
@@ -11,16 +11,12 @@
 #include "key.h"
 #include "led.h"
 #include "app.h"
+#include "buzzer.h"
 
 #define KEY1_Pin KEY_1_Pin
 #define KEY2_Pin KEY_2_Pin
 #define KEY3_Pin KEY_3_Pin
 #define KEY4_Pin KEY_4_Pin
-#define KEY5_Pin KEY_5_Pin
-#define KEY6_Pin KEY_6_Pin
-#define KEY7_Pin KEY_7_Pin
-#define KEY8_Pin KEY_8_Pin
-#define KEY9_Pin KEY_9_Pin
 
 
 #define DEBOUNCE_DELAY 250 // 设置消抖延时为200毫秒
@@ -44,16 +40,18 @@ void Key_Init(void)
 // 按键1 题目切换按钮
 void Key_1_Callback(void)
 {
-    Led_Toggle();
-	//更换题目
-    if(Problem_Flag < 5)
-    {
-        Problem_Flag++;
-    }
-    else 
-    {
-        Problem_Flag = 0;
-    }
+   //Led_Toggle();
+   //更换题目
+   if(Problem_Flag < 5)
+   {
+       Problem_Flag++;
+   }
+   else 
+   {
+       Problem_Flag = 0;
+   }
+    
+    Buzzer_ShortBeep();
 	
 }
 
@@ -100,28 +98,7 @@ void Key_5_Callback(void){
         Problem_Flag = 3;
     }
 }
-void Key_6_Callback(void){
-    //更换题目
-    if(Problem_Flag == 4)
-    {
-        Problem_Flag =0;
-    }
-    else 
-    {
-        Problem_Flag = 4;
-    }
-}
-void Key_7_Callback(void){
-    //更换题目
-    if(Problem_Flag == 5)
-    {
-        Problem_Flag =0;
-    }
-    else 
-    {
-        Problem_Flag = 5;
-    }
-}
+
 
 
 
@@ -138,7 +115,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     /* NOTE: This function Should not be modified, when the callback is needed,
             the HAL_GPIO_EXTI_Callback could be implemented in the user file
     */
-
     // 按键按下
     if(GPIO_Pin == KEY1_Pin)
     {
@@ -148,33 +124,18 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     else if(GPIO_Pin == KEY2_Pin)
     {
         // 按键2按下的处理代码
-        Debounce(GPIO_Pin, Key_2_Callback);
+        Debounce(GPIO_Pin, Key_1_Callback);
     }
-		else if(GPIO_Pin == KEY3_Pin)
+	else if(GPIO_Pin == KEY3_Pin)
     {
 
         // 按键3按下的处理代码
-        Debounce(GPIO_Pin, Key_3_Callback);
+        Debounce(GPIO_Pin, Key_1_Callback);
     }
      else if(GPIO_Pin == KEY4_Pin)
     {
         // 按键4按下的处理代码
-        Debounce(GPIO_Pin, Key_4_Callback);
-    }
-     else if(GPIO_Pin == KEY5_Pin)
-    {
-		// 按键5按下的处理代码
-        Debounce(GPIO_Pin, Key_5_Callback);
-    }
-     else if(GPIO_Pin == KEY6_Pin)
-    {
-        // 按键6按下的处理代码
-        Debounce(GPIO_Pin, Key_6_Callback);
-    }
-		else if(GPIO_Pin == KEY7_Pin)
-    {
-		// 按键6按下的处理代码
-        Debounce(GPIO_Pin, Key_7_Callback);
+        Debounce(GPIO_Pin, Key_1_Callback);
     }
 }
 

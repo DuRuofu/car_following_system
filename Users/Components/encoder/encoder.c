@@ -11,7 +11,7 @@ extern int32_t car_speed_2 = 0; // 电机2速度
 void ENCODER_INIT(void)
 {
 	HAL_TIM_Encoder_Start(&htim2,TIM_CHANNEL_ALL);
-	HAL_TIM_Encoder_Start(&htim4,TIM_CHANNEL_ALL);
+	HAL_TIM_Encoder_Start(&htim3,TIM_CHANNEL_ALL);
 }
 
 
@@ -19,7 +19,7 @@ void ENCODER_INIT(void)
 void Encoder_Count_Init(void)
 {
     HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
-    HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
+    HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
 }
 
 // 编码器数据读取
@@ -31,7 +31,7 @@ int16_t Encoder_Value(uint8_t n)
     }
     else if (n == 2)
     {
-        return (int16_t)(__HAL_TIM_GET_COUNTER(&htim4));
+        return (int16_t)(__HAL_TIM_GET_COUNTER(&htim3));
     }
     else
     {
@@ -48,9 +48,10 @@ void Encoder_Count_Clear(uint8_t n)//看看编码器连的啥，给忘了
     }
     else if (n == 2)
     {
-        __HAL_TIM_SET_COUNTER(&htim4, 0);
+        __HAL_TIM_SET_COUNTER(&htim3, 0);
     }
 }
+
 void encoder_speed(void)//car_speed_1
 {
 // 读取编码器速度

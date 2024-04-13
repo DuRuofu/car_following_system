@@ -7,7 +7,7 @@
 #include "motor.h"
 #include "encoder.h"
 #include "pid.h"
-
+#include "buzzer.h"
 // [K210]实时位置原始值
 extern char k210_msg[64]="100,100,100";
 //题目选择标志位
@@ -57,7 +57,7 @@ void App_Init(void)
 	MOTOR_INIT();
 	ENCODER_INIT();
 	HAL_TIM_Base_Start_IT(&htim2);
-	HAL_TIM_Base_Start_IT(&htim4);
+	HAL_TIM_Base_Start_IT(&htim2);
 	HAL_TIM_Base_Start_IT(&htim1);
 	UART_IT_Init();	     //总串口接收初始化
 	OLED_Init();				 //OLED初始化
@@ -65,6 +65,10 @@ void App_Init(void)
 	OLED_ShowString(4,0,"Car parameter",16);
 	DEBUG_printf("APP","系统初始化完成~");
 
+//  motorset(200, 200);
+//  HAL_Delay(2000);
+//  motorset(-200, -200);
+    Buzzer_ShortBeep();
 }
 	
 	
@@ -170,6 +174,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) // 1ms一次
 		encoder_speed();
 		// 电机速度环控制
 		Car_PID_Ctrl();
+		//int32_t PWM_Out_Speed_A = PID_Speed_A(30, car_speed_1);
+        //int32_t PWM_Out_Speed_B = PID_Speed_B(30, car_speed_2);
+		//DEBUG_info("Target_Speed=%d", 30);
+		//HAL_Delay(1);
+		// 作用到电机
+		//motorset(PWM_Out_Speed_A, PWM_Out_Speed_B);
 	}
 
 	// 500ms执行一次操作

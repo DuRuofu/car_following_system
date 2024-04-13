@@ -16,7 +16,7 @@ float PI_realize(float actual_val, float target_val) // 作为速度环
 
 //---------------速度环(PID)----------------
 extern int32_t Target_Speed = 40; // 目标速度
-float Kp_Speed = 10;      // 速度环比例系数
+float Kp_Speed = 15;      // 速度环比例系数
 float Ki_Speed = 0.0;        // 速度环积分系数
 int32_t Kd_Speed = 0.5;      // 速度环微分系数
 
@@ -135,7 +135,7 @@ void Car_PID_Ctrl(void)
     {
         PWM_Output_A = -MOTOR_PWM_MAX;
     }
-    else if (PWM_Output_B >= MOTOR_PWM_MAX)
+    if (PWM_Output_B >= MOTOR_PWM_MAX)
     {
         PWM_Output_B = MOTOR_PWM_MAX;
     }
@@ -145,7 +145,7 @@ void Car_PID_Ctrl(void)
     }
     
     DEBUG_info("Target_Speed=%d",Target_Speed);
-    HAL_Delay(1);
+    HAL_Delay(2);
     // 作用到电机
     motorset(PWM_Output_A, PWM_Output_B);
 }
