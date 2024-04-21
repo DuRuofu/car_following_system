@@ -12,7 +12,7 @@ void RightMotor_Back(void);
 void RightMotor_Stop(void);
 void LeftMotor_Stop(void);
 void MotorControl(char motorDirection, int leftMotorPWM, int rightMotorPWM);
-void motorset(int leftMotorPWM, int rightMotorPWM);
+void motorset(float leftMotorPWM, float rightMotorPWM);
 
 
 

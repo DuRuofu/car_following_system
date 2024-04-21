@@ -10,6 +10,5 @@ void ENCODER_INIT(void);
 int16_t Encoder_Value(uint8_t n);
 void Encoder_Count_Clear(uint8_t n);
 void encoder_speed(void);
-float encoder_speed1(float car_speed_1);
-float encoder_speed2(float car_speed_2);
+void encoder_speed_Sum(void);
 #endif

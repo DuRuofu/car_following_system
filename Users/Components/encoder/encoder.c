@@ -4,9 +4,12 @@
 
 extern int32_t car_speed_1 = 0; // 电机1速度
 extern int32_t car_speed_2 = 0; // 电机2速度
-
-//extern int32_t car_speed1;
-//extern int32_t car_speed2;
+int32_t car_speed_sum_A = 0; 
+int32_t car_speed_sum_B = 0;//总转速
+extern int32_t Target_Speed;
+extern int32_t Target_Location;
+extern int32_t car_location_1 = 0;
+extern int32_t car_location_2 = 0;
 
 void ENCODER_INIT(void)
 {
@@ -56,48 +59,43 @@ void Encoder_Count_Clear(uint8_t n)//看看编码器连的啥，给忘了
 
 void encoder_speed(void)//car_speed_1
 {
+	
+//		// 清零编码器计数值
+//		Encoder_Count_Clear(1);
+//		Encoder_Count_Clear(2);
+//	
+	
+	
 // 读取编码器速度
     car_speed_1 = Encoder_Value(1);
     car_speed_2 = Encoder_Value(2);
-
-    // 放大10倍
-    // car_speed_1 = car_speed_1*10;
-    // car_speed_2 = car_speed_2*10;
-
-	//if(car_speed_1>=65535) car_speed_1=((car_speed_1/10)-65535)*10;
-	//if(car_speed_2>=65535) car_speed_2=((car_speed_2/10)-65535)*10;
-
+	
+		car_speed_sum_A += car_speed_1;
+		car_speed_sum_B += car_speed_2;
+	
+		car_location_1 = car_speed_sum_A;
+		car_location_2 = car_speed_sum_B;
+	
+		car_location_1 = car_location_1;  //左轮转的总圈数  原始值/1100=圈数  K*1100
+		car_location_2 = car_location_2;  //右轮转的总圈数
+		float c = (float)car_speed_1/car_speed_2;
+//		DEBUG_printf("APP","%d,%d,%d",car_location_1,car_location_2,Target_Location);
     // 清零编码器计数值
-    Encoder_Count_Clear(1);
-    Encoder_Count_Clear(2);
-
-	//printf("car_speed_1:%d\r\n",car_speed_1/10);
-	//printf("car_speed_2:%d\r\n",car_speed_2/10);
-
-    // 打印速度值
-    //printf("car_speed_1:%d\r\n",car_speed_1);
+		Encoder_Count_Clear(1);
+		Encoder_Count_Clear(2);
+		DEBUG_printf("APP","%d,%d,%f",car_speed_1,car_speed_2,c);
 
 }
 
 
-float encoder_speed1(float car_speed_1)
+void encoder_speed_Sum(void)
 {
-	car_speed_1= Encoder_Value(1);
-	car_speed_1 = car_speed_1*10;
-	if(car_speed_1>=65535) car_speed_1=((car_speed_1/10)-65535)*10;
-	Encoder_Count_Clear(1);
-	//printf("car_speed_1:%d\r\n",car_speed_1);
-	return car_speed_1;
+	car_speed_sum_A = Encoder_Value(1);
+	car_speed_sum_A = car_speed_sum_A/1100;
+	car_speed_sum_B = Encoder_Value(2);
+	car_speed_sum_B = car_speed_sum_B/1100;
+//	DEBUG_printf("APP","%d,%d,%d",car_speed_sum_A,car_speed_sum_B,Target_Speed);
 	
 }
 
-float encoder_speed2(float car_speed_2)
-{
-	car_speed_2= Encoder_Value(1);
-	car_speed_2 = car_speed_1*10;
-	if(car_speed_2>=65535) car_speed_2=((car_speed_2/10)-65535)*10;
-	Encoder_Count_Clear(2);
-	//printf("car_speed_2:%d\r\n",car_speed_2);
-	return car_speed_2;
-	
-}
+

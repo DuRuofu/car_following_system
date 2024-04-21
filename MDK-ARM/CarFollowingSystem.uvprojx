@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../Users/App;../Users/Components/key;../Users/Components/led;../Users/Components/oled;../Users/Components/usart;../Users/Components/motor;../Users/Components/encoder;../Users/Components/pid;../Users/Components/buzzer</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../Users/App;../Users/Components/key;../Users/Components/led;../Users/Components/oled;../Users/Components/usart;../Users/Components/motor;../Users/Components/encoder;../Users/Components/pid;../Users/Components/buzzer;../Users/Components/PWM;../Users/Components/YunTai</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -525,19 +525,9 @@
               <FilePath>..\Users\Components\ENCODER\encoder.c</FilePath>
             </File>
             <File>
-              <FileName>encoder.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Users\Components\ENCODER\encoder.h</FilePath>
-            </File>
-            <File>
               <FileName>motor.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Users\Components\MOTOR\motor.c</FilePath>
-            </File>
-            <File>
-              <FileName>motor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Users\Components\MOTOR\motor.h</FilePath>
             </File>
             <File>
               <FileName>pid.c</FileName>
@@ -545,14 +535,19 @@
               <FilePath>..\Users\Components\PID\pid.c</FilePath>
             </File>
             <File>
-              <FileName>pid.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Users\Components\PID\pid.h</FilePath>
-            </File>
-            <File>
               <FileName>buzzer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Users\Components\buzzer\buzzer.c</FilePath>
+            </File>
+            <File>
+              <FileName>pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Users\Components\PWM\pwm.c</FilePath>
+            </File>
+            <File>
+              <FileName>yuntai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Users\Components\YunTai\yuntai.c</FilePath>
             </File>
           </Files>
         </Group>

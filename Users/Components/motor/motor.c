@@ -15,22 +15,26 @@ void MOTOR_INIT(void)
 void LeftMotor_Go()
 {
 
-	HAL_GPIO_WritePin(CAR_EN_1_GPIO_Port, CAR_EN_1_Pin, GPIO_PIN_RESET);
+//	HAL_GPIO_WritePin(CAR_EN_2_GPIO_Port, CAR_EN_2_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(CAR_EN_3_GPIO_Port, CAR_EN_3_Pin, GPIO_PIN_RESET);
 }
 void LeftMotor_Back()
 {
 
-	HAL_GPIO_WritePin(CAR_EN_1_GPIO_Port, CAR_EN_1_Pin, GPIO_PIN_SET);
+//	HAL_GPIO_WritePin(CAR_EN_2_GPIO_Port, CAR_EN_2_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(CAR_EN_3_GPIO_Port, CAR_EN_3_Pin, GPIO_PIN_SET);
 }
 void RightMotor_Go()
 {
 
-	HAL_GPIO_WritePin(CAR_EN_1_GPIO_Port, CAR_EN_2_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(CAR_EN_2_GPIO_Port, CAR_EN_2_Pin, GPIO_PIN_SET);
+//	HAL_GPIO_WritePin(CAR_EN_3_GPIO_Port, CAR_EN_3_Pin, GPIO_PIN_RESET);
 }
 void RightMotor_Back()
 {
 
-	HAL_GPIO_WritePin(CAR_EN_1_GPIO_Port, CAR_EN_2_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(CAR_EN_2_GPIO_Port, CAR_EN_2_Pin, GPIO_PIN_RESET);
+//	HAL_GPIO_WritePin(CAR_EN_3_GPIO_Port, CAR_EN_3_Pin, GPIO_PIN_SET);
 }
 
 void RightMotor_Stop()
@@ -83,7 +87,7 @@ void MotorControl(char motorDirection, int leftMotorPWM, int rightMotorPWM)
 	}
 }
 
-void motorset(int leftMotorPWM, int rightMotorPWM) // 速度
+void motorset(float leftMotorPWM, float rightMotorPWM) // 速度
 {
 	if (leftMotorPWM >= 0 && rightMotorPWM >= 0) // 直行
 	{
